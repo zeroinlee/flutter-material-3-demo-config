@@ -1,0 +1,44 @@
+name: material_3_demo
+description:
+  A Flutter project showcasing supported Material 3 components, typography, color system and elevation.
+  Supports different light/dark mode, color seed, and comparison to Material 2.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  url_launcher: ^6.1.8
+  win32: ^5.9.0
+  go_router: ^14.6.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/NotoSansKR-Black.ttf
+          weight: 900
+        - asset: assets/NotoSansKR-Bold.ttf
+          weight: 700
+        - asset: assets/NotoSansKR-Light.ttf
+          weight: 300
+        - asset: assets/NotoSansKR-Medium.ttf
+          weight: 500
+        - asset: assets/NotoSansKR-Regular.ttf
+          weight: 400
+        - asset: assets/NotoSansKR-Thin.ttf
+          weight: 100
