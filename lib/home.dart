@@ -116,23 +116,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             child: OneTwoTransition(
               animation: railAnimation,
               one: FirstComponentList(
-                  showNavBottomBar: showNavBarExample,
-                  scaffoldKey: scaffoldKey,
-                  showSecondList: showMediumSizeLayout || showLargeSizeLayout),
-              two: SecondComponentList(
+                showNavBottomBar: showNavBarExample,
                 scaffoldKey: scaffoldKey,
+                showSecondList: showMediumSizeLayout || showLargeSizeLayout,
               ),
+              two: SecondComponentList(scaffoldKey: scaffoldKey),
             ),
           ),
         ScreenSelected.color => const ColorPalettesScreen(),
         ScreenSelected.typography => const TypographyScreen(),
-        ScreenSelected.elevation => const ElevationScreen()
+        ScreenSelected.elevation => const ElevationScreen(),
       };
 
   PreferredSizeWidget createAppBar() {
     return AppBar(
       title: widget.useMaterial3
-          ? const Text('Material 3: 안녕하세요!')
+          ? const Text('Material 3')
           : const Text('Material 2'),
       actions: !showMediumSizeLayout && !showLargeSizeLayout
           ? [
@@ -151,7 +150,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 handleImageSelect: widget.handleImageSelect,
                 imageSelected: widget.imageSelected,
                 colorSelectionMethod: widget.colorSelectionMethod,
-              )
+              ),
             ]
           : [Container()],
     );
@@ -200,7 +199,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           railAnimation: railAnimation,
           appBar: createAppBar(),
           body: createScreenFor(
-              ScreenSelected.values[screenIndex], controller.value == 1),
+            ScreenSelected.values[screenIndex],
+            controller.value == 1,
+          ),
           navigationRail: NavigationRail(
             extended: showLargeSizeLayout,
             destinations: navRailDestinations,
@@ -311,9 +312,7 @@ class _ColorSeedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(
-        Icons.palette_outlined,
-      ),
+      icon: const Icon(Icons.palette_outlined),
       tooltip: 'Select a seed color',
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
@@ -364,9 +363,7 @@ class _ColorImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(
-        Icons.image_outlined,
-      ),
+      icon: const Icon(Icons.image_outlined),
       tooltip: 'Select a color extraction image',
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
@@ -449,10 +446,11 @@ class _ExpandedTrailingActions extends StatelessWidget {
               const Text('Brightness'),
               Expanded(child: Container()),
               Switch(
-                  value: useLightMode,
-                  onChanged: (value) {
-                    handleBrightnessChange(value);
-                  })
+                value: useLightMode,
+                onChanged: (value) {
+                  handleBrightnessChange(value);
+                },
+              ),
             ],
           ),
           Row(
@@ -462,10 +460,11 @@ class _ExpandedTrailingActions extends StatelessWidget {
                   : const Text('Material 2'),
               Expanded(child: Container()),
               Switch(
-                  value: useMaterial3,
-                  onChanged: (_) {
-                    handleMaterialVersionChange();
-                  })
+                value: useMaterial3,
+                onChanged: (_) {
+                  handleMaterialVersionChange();
+                },
+              ),
             ],
           ),
           const Divider(),
@@ -580,15 +579,16 @@ class _ExpandedImageColorAction extends StatelessWidget {
 }
 
 class NavigationTransition extends StatefulWidget {
-  const NavigationTransition(
-      {super.key,
-      required this.scaffoldKey,
-      required this.animationController,
-      required this.railAnimation,
-      required this.navigationRail,
-      required this.navigationBar,
-      required this.appBar,
-      required this.body});
+  const NavigationTransition({
+    super.key,
+    required this.scaffoldKey,
+    required this.animationController,
+    required this.railAnimation,
+    required this.navigationRail,
+    required this.navigationBar,
+    required this.appBar,
+    required this.body,
+  });
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AnimationController animationController;
@@ -617,10 +617,7 @@ class _NavigationTransitionState extends State<NavigationTransition> {
     railAnimation = widget.railAnimation;
 
     barAnimation = ReverseAnimation(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.0, 0.5),
-      ),
+      CurvedAnimation(parent: controller, curve: const Interval(0.0, 0.5)),
     );
   }
 
@@ -654,10 +651,7 @@ class _NavigationTransitionState extends State<NavigationTransition> {
 final List<NavigationRailDestination> navRailDestinations = appBarDestinations
     .map(
       (destination) => NavigationRailDestination(
-        icon: Tooltip(
-          message: destination.label,
-          child: destination.icon,
-        ),
+        icon: Tooltip(message: destination.label, child: destination.icon),
         selectedIcon: Tooltip(
           message: destination.label,
           child: destination.selectedIcon,
@@ -671,11 +665,8 @@ class SizeAnimation extends CurvedAnimation {
   SizeAnimation(Animation<double> parent)
       : super(
           parent: parent,
-          curve: const Interval(
-            0.2,
-            0.8,
-            curve: Curves.easeInOutCubicEmphasized,
-          ),
+          curve:
+              const Interval(0.2, 0.8, curve: Curves.easeInOutCubicEmphasized),
           reverseCurve: Interval(
             0,
             0.2,
@@ -688,11 +679,8 @@ class OffsetAnimation extends CurvedAnimation {
   OffsetAnimation(Animation<double> parent)
       : super(
           parent: parent,
-          curve: const Interval(
-            0.4,
-            1.0,
-            curve: Curves.easeInOutCubicEmphasized,
-          ),
+          curve:
+              const Interval(0.4, 1.0, curve: Curves.easeInOutCubicEmphasized),
           reverseCurve: Interval(
             0,
             0.2,
@@ -702,11 +690,12 @@ class OffsetAnimation extends CurvedAnimation {
 }
 
 class RailTransition extends StatefulWidget {
-  const RailTransition(
-      {super.key,
-      required this.animation,
-      required this.backgroundColor,
-      required this.child});
+  const RailTransition({
+    super.key,
+    required this.animation,
+    required this.backgroundColor,
+    required this.child,
+  });
 
   final Animation<double> animation;
   final Widget child;
@@ -758,11 +747,12 @@ class _RailTransition extends State<RailTransition> {
 }
 
 class BarTransition extends StatefulWidget {
-  const BarTransition(
-      {super.key,
-      required this.animation,
-      required this.backgroundColor,
-      required this.child});
+  const BarTransition({
+    super.key,
+    required this.animation,
+    required this.backgroundColor,
+    required this.child,
+  });
 
   final Animation<double> animation;
   final Color backgroundColor;
@@ -848,10 +838,7 @@ class _OneTwoTransitionState extends State<OneTwoTransition> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Flexible(
-          flex: mediumWidthBreakpoint.toInt(),
-          child: widget.one,
-        ),
+        Flexible(flex: mediumWidthBreakpoint.toInt(), child: widget.one),
         if (widthAnimation.value.toInt() > 0) ...[
           Flexible(
             flex: widthAnimation.value.toInt(),
@@ -859,7 +846,7 @@ class _OneTwoTransitionState extends State<OneTwoTransition> {
               translation: offsetAnimation.value,
               child: widget.two,
             ),
-          )
+          ),
         ],
       ],
     );
