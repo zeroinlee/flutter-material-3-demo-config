@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:material_3_demo/app_color_scheme.dart';
-import 'package:material_3_demo/app_theme.dart';
+import 'package:material_3_demo/theme/app_color_scheme.dart';
+import 'package:material_3_demo/theme/app_theme.dart';
 
 import 'constants.dart';
 import 'home.dart';
